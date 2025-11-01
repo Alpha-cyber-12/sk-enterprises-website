@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S.K. Enterprises | Trusted Precision Manufacturing</title>
     
-    <!-- Preconnect for faster loading of Tailwind -->
-    <link rel="preconnect" href="https://cdn.tailwindcss.com">
-    
     <!-- Load Tailwind CSS -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load Inter Font -->
+    <!-- Load Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    
     <script>
         // Set Tailwind config to enable dark mode based on class
         tailwind.config = {
@@ -83,18 +82,52 @@
             transform: translateY(0);
         }
 
-        /* --- Map Container Styling --- */
+        /* --- Map Container Styling (Fixed for Iframe use) --- */
         .map-container {
             height: 300px;
             width: 100%;
             overflow: hidden;
             border-radius: 0.75rem; 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative; /* Essential for clickable overlay */
+            cursor: pointer; 
         }
         .map-container iframe {
-            pointer-events: none; 
+            pointer-events: none; /* Make iframe non-interactive */
             width: 100%;
             height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        /* Hidden overlay link to capture clicks */
+        .map-container a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10; /* Ensures the link is on top of the iframe */
+            background: transparent;
+            display: block;
+        }
+        /* Style the link text inside the overlay for visibility */
+        .map-overlay-text {
+             position: absolute;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             padding: 1rem;
+             background-color: rgba(255, 255, 255, 0.8);
+             border-radius: 0.5rem;
+             font-weight: 700;
+             color: #1d4ed8;
+             z-index: 11; /* Above the transparent link layer */
+             transition: background-color 0.3s;
+        }
+        .map-container:hover .map-overlay-text {
+            background-color: rgba(255, 255, 255, 0.95);
         }
         
         /* Dark mode overrides for specific elements */
@@ -112,21 +145,20 @@
 </head>
 <body class="antialiased">
 
-    <!-- Mobile Menu (Off-Canvas) -->
+    <!-- Mobile Menu Overlay -->
     <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-white dark:bg-gray-900 z-50 transform -translate-x-full transition-transform duration-300 md:hidden shadow-2xl">
         <div class="p-8">
             <div class="flex justify-between items-center mb-10 border-b pb-4 border-gray-200 dark:border-gray-700">
                 <div class="flex items-center space-x-2">
-                    <!-- Logo in Mobile Menu -->
-                    <img src="S (2).png-aa3f1247-f8b6-4289-b8af-fd224ee4bf85" 
+                    <img src="logo 2.png" 
                          alt="S.K. Enterprises Logo" 
                          class="h-8 w-auto dark:filter dark:invert" 
-                         onerror="this.onerror=null; this.src='https://placehold.co/80x32/1d4ed8/ffffff?text=SK';"
+                         onerror="this.onerror=null; this.src=''; this.alt='S.K. Enterprises';"
                     >
                     <span class="text-2xl font-extrabold text-gray-900 dark:text-gray-100">S.K. Menu</span>
                 </div>
                 <button id="close-menu" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400">
-                    <!-- Close Icon -->
+                    <!-- Close Icon (X) -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                 </button>
             </div>
@@ -135,34 +167,37 @@
                 <a href="#specialization" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 pb-2 border-b border-gray-100 dark:border-gray-800">Specialization</a>
                 <a href="#offerings" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 pb-2 border-b border-gray-100 dark:border-gray-800">Offerings</a>
                 <a href="#trust" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 pb-2 border-b border-gray-100 dark:border-gray-800">Quality & Trust</a>
+                <!-- New Inquiry Link -->
+                <a href="#inquiry" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 pb-2 border-b border-gray-100 dark:border-gray-800">Inquiry</a>
                 <a href="#contact" class="pt-4 text-blue-700 dark:text-blue-400 hover:text-blue-900">Contact Us</a>
             </nav>
         </div>
     </div>
 
-    <!-- Sticky Header Navigation -->
+    <!-- Sticky Header -->
     <header class="sticky top-0 z-40 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-lg border-b border-gray-200 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
             <a href="#hero" class="flex items-center space-x-2 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-gray-100 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">
-                <!-- Logo in Header -->
-                <img src="S (2).png-aa3f1247-f8b6-4289-b8af-fd224ee4bf85" 
+                <img src="logo 2.png" 
                      alt="S.K. Enterprises Logo" 
                      class="h-8 w-auto dark:filter dark:invert" 
-                     onerror="this.onerror=null; this.src='https://placehold.co/80x32/1d4ed8/ffffff?text=SK';"
+                     onerror="this.onerror=null; this.src=''; this.alt='S.K. Enterprises';"
                 >
                 <span>S.K. <span class="text-blue-700 dark:text-blue-400">Enterprises</span></span>
             </a>
+            
             <div class="flex items-center space-x-6"> 
-                <!-- Desktop Navigation Links -->
+                <!-- Desktop Navigation -->
                 <nav class="hidden md:flex space-x-6 text-sm font-medium items-center"> 
                     <a href="#about" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">About Us</a>
                     <a href="#specialization" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">Specialization</a>
                     <a href="#offerings" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">Offerings</a>
                     <a href="#trust" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">Quality & Trust</a>
-                    <a href="#contact" class="px-3 py-1.5 rounded-lg bg-blue-700 text-white font-medium hover:bg-blue-800 transition duration-300">Contact</a>
+                    <a href="#inquiry" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">Inquiry</a>
+                    <a href="#contact" class="px-3 py-1.5 rounded-lg bg-blue-700 text-white hover:bg-blue-800 transition duration-300">Contact</a>
                 </nav>
 
-                <!-- Dark Mode Toggle Button (Far Right) -->
+                <!-- Dark Mode Toggle -->
                 <button id="theme-toggle" class="p-2 rounded-full text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition duration-300" aria-label="Toggle dark mode">
                     <!-- Sun Icon (Light Mode) -->
                     <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="m4.93 19.07 1.41-1.41"/><path d="m17.66 6.34 1.41-1.41"/></svg>
@@ -172,6 +207,7 @@
                 
                 <!-- Mobile Menu Button -->
                 <button id="open-menu" class="md:hidden text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400" aria-label="Open Menu">
+                    <!-- Menu Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
                 </button>
             </div>
@@ -182,11 +218,10 @@
         <!-- Hero Section -->
         <section id="hero" class="relative overflow-hidden pt-24 pb-32 md:pt-40 md:pb-48 text-center border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-up">
-                <!-- Logo in Hero -->
-                <img src="S (2).png-aa3f1247-f8b6-4289-b8af-fd224ee4bf85" 
+                <img src="logo 2.png" 
                      alt="S.K. Enterprises Logo" 
                      class="h-24 sm:h-32 lg:h-40 mx-auto mb-6 w-auto dark:filter dark:invert" 
-                     onerror="this.onerror=null; this.src='https://placehold.co/120x120/1d4ed8/ffffff?text=SK';"
+                     onerror="this.onerror=null; this.src=''; this.alt='S.K. Enterprises';"
                 >
                 <h1 class="text-5xl sm:text-7xl lg:text-8xl font-extrabold text-gray-900 dark:text-gray-100 leading-tight mb-6">
                     S.K. <span class="text-blue-700 dark:text-blue-400">Enterprises</span>
@@ -198,8 +233,8 @@
                     <a href="#offerings" class="px-8 py-3 bg-blue-700 text-white font-semibold rounded-xl shadow-lg hover:bg-blue-800 transition duration-300 transform hover:scale-[1.03] active:scale-95" role="button">
                         View Offerings
                     </a>
-                    <a href="#contact" class="px-8 py-3 border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300 transform hover:scale-[1.03] active:scale-95" role="button">
-                        Contact Sales
+                    <a href="#inquiry" class="px-8 py-3 border border-gray-400 dark:border-gray-600 text-gray-700 dark:text-gray-300 font-semibold rounded-xl shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition duration-300 transform hover:scale-[1.03] active:scale-95" role="button">
+                        Send Inquiry
                     </a>
                 </div>
             </div>
@@ -217,10 +252,10 @@
                             Established over 20 years ago, S.K. Enterprises is a fully registered and trusted manufacturer based in the Jhilmil Industrial Area, Delhi, specializing in high-precision components like Electronic Base Shells and robust MS Rollers.
                         </p>
                         <p class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                            Our legacy, driven by Proprietor **Mr. Vikas Agarwal**, is built on a commitment to high precision skills, ensuring every product meets the strictest standards for dimensional accuracy and quality. This dedication gives our clients the confidence that comes from partnering with a reliable and experienced industry leader.
+                            Our legacy, driven by Proprietor "Mr. Vikas Agarwal", is built on a commitment to high precision skills, ensuring every product meets the strictest standards for dimensional accuracy and quality. This dedication gives our clients the confidence that comes from partnering with a reliable and experienced industry leader.
                         </p>
                     </div>
-                    <!-- Placeholder Image -->
+                    <!-- Placeholder Image 1 -->
                     <div class="order-1 lg:order-2 fade-in-up">
                          <img src="https://placehold.co/600x400/1d4ed8/ffffff?text=Precision+Manufacturing" 
                             alt="Image Placeholder: A modern factory floor representing precision manufacturing."
@@ -242,7 +277,7 @@
                         Specialized Cylindrical Components
                     </p>
                     <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-                        We are a dedicated manufacturer for the **Electronic Printing** and **Rotogravure Industries**, providing critical, dimensionally accurate components that are essential for high-speed, flawless production processes. Our focus is narrow, but our precision is absolute.
+                        We are a dedicated manufacturer for the 'Electronic Printing' and 'Rotogravure Industries', providing critical, dimensionally accurate components that are essential for high-speed, flawless production processes. Our focus is narrow, but our precision is absolute.
                     </p>
                 </div>
             </div>
@@ -256,8 +291,9 @@
                 </h2>
                 <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
                     
-                    <!-- Offering 1: MS Rollers -->
+                    <!-- Offering Card 1: MS Rollers -->
                     <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 transition duration-300 hover:border-blue-700 dark:hover:border-blue-400 transform hover:scale-[1.02] fade-in-up" data-delay="100">
+                        <!-- Placeholder Image 2 -->
                         <img src="https://placehold.co/400x250/3b82f6/ffffff?text=MS+Roller+Component" 
                              alt="Image Placeholder: High-durability Mild Steel Roller component."
                              class="w-full h-auto rounded-lg mb-6 shadow-md border border-gray-300 dark:border-gray-700 object-cover" 
@@ -268,8 +304,9 @@
                         </p>
                     </div>
 
-                    <!-- Offering 2: Electronic Base Shells -->
+                    <!-- Offering Card 2: Base Shells -->
                     <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 transition duration-300 hover:border-blue-700 dark:hover:border-blue-400 transform hover:scale-[1.02] fade-in-up" data-delay="200">
+                        <!-- Placeholder Image 3 -->
                         <img src="https://placehold.co/400x250/3b82f6/ffffff?text=Electronic+Base+Shell" 
                              alt="Image Placeholder: Precision-machined electronic base shell component."
                              class="w-full h-auto rounded-lg mb-6 shadow-md border border-gray-300 dark:border-gray-700 object-cover" 
@@ -280,8 +317,9 @@
                         </p>
                     </div>
 
-                    <!-- Offering 3: Dimensional Accuracy -->
+                    <!-- Offering Card 3: Accuracy -->
                     <div class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-200 dark:border-gray-700 transition duration-300 hover:border-blue-700 dark:hover:border-blue-400 transform hover:scale-[1.02] fade-in-up" data-delay="300">
+                        <!-- Placeholder Image 4 -->
                         <img src="https://placehold.co/400x250/3b82f6/ffffff?text=Dimensional+Check" 
                              alt="Image Placeholder: Micrometer checking dimensions for quality control."
                              class="w-full h-auto rounded-lg mb-6 shadow-md border border-gray-300 dark:border-gray-700 object-cover" 
@@ -302,26 +340,29 @@
                     Quality & Trust
                 </h2>
                 
-                <!-- Certifications/Protocol Grid -->
+                <!-- Certifications/Standards -->
                 <div class="mt-12 max-w-4xl mx-auto text-center grid grid-cols-1 sm:grid-cols-3 gap-8 mb-16 fade-in-up">
                     <div class="text-center p-4">
+                        <!-- Shield Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check mx-auto mb-3 text-blue-700 dark:text-blue-400"><path d="M20 13c0 5-4 9-8 9s-8-4-8-9V5l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></svg>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">ISO 9001 Protocol</h3>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">Strict adherence to international quality management systems.</p>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">High-Precision Quality Standards</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Strict adherence to internal quality management and control protocols.</p>
                     </div>
                     <div class="text-center p-4">
+                        <!-- Users Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users-2 mx-auto mb-3 text-blue-700 dark:text-blue-400"><path d="M14 19a6 6 0 0 0-12 0"/><circle cx="8" cy="10" r="4"/><path d="M22 19a6 6 0 0 0-6-6 4 4 0 1 0 0-8"/></svg>
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">20+ Year Legacy</h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Proven track record as a reliable and experienced manufacturer.</p>
                     </div>
                     <div class="text-center p-4">
+                        <!-- Gauge Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gauge mx-auto mb-3 text-blue-700 dark:text-blue-400"><path d="m12 14.5 2-2.5"/><path d="M6.3 18.2a8 8 0 1 1 11.4 0"/></svg>
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100">Zero-Defect Goal</h3>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Commitment to delivering components with maximum concentricity.</p>
                     </div>
                 </div>
 
-                <!-- Testimonials Section -->
+                <!-- Testimonials -->
                 <div class="mt-16 pt-12 border-t border-gray-200 dark:border-gray-700">
                     <h3 class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-10">What Our Clients Say</h3>
                     <div class="grid md:grid-cols-3 gap-8">
@@ -363,11 +404,7 @@
                 </p>
 
                 <!-- Inquiry Form (Connected to Formspree) -->
-                <form 
-                    action="https://formspree.io/f/movppnvb" 
-                    method="POST" 
-                    class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700"
-                >
+                <form action="https://formspree.io/f/movppnvb" method="POST" class="bg-white dark:bg-gray-900 p-8 rounded-xl shadow-xl border border-gray-200 dark:border-gray-700">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <input type="text" name="name" placeholder="Your Name" class="p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500" required>
                         <input type="email" name="_replyto" placeholder="Your Work Email" class="p-3 border border-gray-300 dark:border-gray-600 dark:bg-gray-800 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-blue-500 focus:border-blue-500" required>
@@ -381,12 +418,14 @@
                     <button type="submit" class="w-full py-3 bg-blue-700 text-white font-semibold rounded-lg shadow-md hover:bg-blue-800 transition duration-300 transform hover:scale-[1.01] active:scale-[0.99]">
                         Submit Inquiry
                     </button>
+                    <!-- Formspree success redirect (hidden field) -->
+                    <input type="hidden" name="_next" value="#inquiry" />
                 </form>
             </div>
         </section>
     </main>
 
-    <!-- Footer / Contact Information -->
+    <!-- Footer / Contact Section -->
     <footer id="contact" class="bg-gray-100 dark:bg-gray-900 pt-20 pb-12 border-t-8 border-blue-700 dark:border-blue-400">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="section-heading mx-auto text-center md:text-left mb-16">
@@ -394,35 +433,40 @@
             </h2>
             <div class="grid md:grid-cols-3 gap-12 border-b border-gray-300 dark:border-gray-700 pb-12">
                 
-                <!-- Contact Card: Email -->
+                <!-- Contact Card 1: Email -->
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center fade-in-up">
                     <div class="text-blue-700 dark:text-blue-400 mb-4 inline-block">
                         <!-- Mail Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
                     </div>
                     <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Email Inquiry</h3>
-                    <p class="text-gray-600 dark:text-gray-400 break-words">vikasagarwal183@gmail.com</p>
-                    <a href="mailto:vikasagarwal183@gmail.com" class="mt-3 inline-block text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-500">Send an Email</a>
+                    <p class="text-gray-600 dark:text-gray-400 break-words">shivaaggarwal1234@gmail.com</p>
+                    <a href="mailto:shivaaggarwal1234@gmail.com" class="mt-3 inline-block text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-500">Send an Email</a>
                 </div>
 
-                <!-- Contact Card: Phone -->
+                <!-- Contact Card 2: Phone -->
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center fade-in-up" data-delay="50">
                     <div class="text-blue-700 dark:text-blue-400 mb-4 inline-block">
                         <!-- Phone Icon -->
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-call"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.71-6.71 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.9 2.1a9 9 0 0 1 4.2 4.2"/><path d="M18.1 5.3a5 5 0 0 1-1.8 1.8"/></svg>
                     </div>
                     <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">Direct Call</h3>
-                    <p class="text-gray-600 dark:text-gray-400 break-words">+91 98765 43210 (Placeholder)</p>
-                    <a href="tel:+919876543210" class="mt-3 inline-block text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-500">Call Now</a>
+                    <p class="text-gray-600 dark:text-gray-400 break-words">+91 9811107598</p>
+                    <a href="tel:+919811107598" class="mt-3 inline-block text-sm font-medium text-blue-700 dark:text-blue-400 hover:text-blue-500">Call Now</a>
                 </div>
 
-                <!-- Contact Card: Location/Map -->
+                <!-- Contact Card 3: Location Map (Reverted to embedded map with clickable overlay) -->
                 <div class="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-200 dark:border-gray-700 text-center fade-in-up" data-delay="100">
                     <h3 class="text-xl font-semibold mb-4 text-gray-900 dark:text-gray-100">Our Location</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">3rd floor, B2/50, Jhilmil Industrial Area, Vivek Vihar, Delhi, 110095</p>
                     
-                    <!-- Google Maps Iframe (Non-scrollable, for display) -->
-                    <div class="map-container" role="presentation" aria-label="Google Map showing the location of S.K. Enterprises in Jhilmil Industrial Area, Delhi.">
+                    <!-- Clickable Text Address -->
+                    <a href="https://maps.app.goo.gl/WiAkr9tx26aPbKTw9" target="_blank" class="text-gray-700 dark:text-gray-300 hover:text-blue-700 dark:hover:text-blue-400 block mb-4 text-sm underline-offset-4 hover:underline transition" role="button">
+                        3rd floor, B2/50, Jhilmil Industrial Area, Vivek Vihar, Delhi, 110095
+                    </a>
+                    
+                    <!-- Map Container with Iframe and Clickable Overlay -->
+                    <div class="map-container" role="presentation" aria-label="Google Map showing the location of S.K. Enterprises.">
+                        <!-- Iframe for visual map embed (glitch risk mitigated by CSS pointer-events: none) -->
                         <iframe 
                             src="https://maps.google.com/maps?q=3rd%20floor,%20B2/50,%20Jhilmil%20Industrial%20Area,%20Vivek%20Vihar,%20Delhi,%20110095&t=&z=15&ie=UTF8&iwloc=&output=embed" 
                             frameborder="0" 
@@ -434,6 +478,12 @@
                             referrerpolicy="no-referrer-when-downgrade"
                             title="Office Location Map">
                         </iframe>
+                        <!-- Transparent link overlay to capture clicks and open in new tab -->
+                        <a href="https://maps.app.goo.gl/WiAkr9tx26aPbKTw9" target="_blank" role="button" aria-label="Open location in Google Maps">
+                            <span class="map-overlay-text text-sm font-semibold whitespace-nowrap">
+                                CLICK TO VIEW LOCATION ON GOOGLE MAPS
+                            </span>
+                        </a>
                     </div>
                 </div>
                 
@@ -445,15 +495,15 @@
         </div>
     </footer>
     
-    <!-- Proprietor Signature/Trust Badge -->
+    <!-- Proprietor Badge (Desktop Only) -->
     <div id="proprietor-badge" class="fixed bottom-6 left-6 z-50 p-3 bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-opacity duration-500 opacity-0 hidden md:flex items-center space-x-2" role="status">
-        <!-- Shield/Check Icon -->
+        <!-- Shield Icon -->
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check text-blue-700 dark:text-blue-400">
             <path d="M20 13c0 5-4 9-8 9s-8-4-8-9V5l8-3 8 3z"/>
             <path d="m9 12 2 2 4-4"/>
         </svg>
         <span class="text-sm font-semibold text-gray-900 dark:text-gray-100 whitespace-nowrap">
-            Quality Assurance by Mr. Agarwal
+            Quality Assurance by Mr. Vikas Agarwal
         </span>
     </div>
 
@@ -528,6 +578,13 @@
         const scrollTopBtn = document.getElementById('scroll-to-top');
         const proprietorBadge = document.getElementById('proprietor-badge');
 
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
         window.addEventListener('scroll', () => {
             const scrollPosition = window.scrollY;
 
@@ -547,14 +604,6 @@
                 proprietorBadge.classList.remove('opacity-100');
                 proprietorBadge.classList.add('opacity-0');
             }
-        });
-
-        // Add functionality to the scroll-to-top button
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
         });
 
 
